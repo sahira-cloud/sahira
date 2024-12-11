@@ -1,0 +1,104 @@
+19. Measure the Distance Using Ultrasonic Sensor and Make Led Blink Using Arduino
+
+Theory
+
+An ultrasonic sensor (e.g., HC-SR04) measures distance by sending ultrasonic waves and calculating the time taken for the 
+
+echo to return. The formula for distance is:
+
+Distance (cm)=Time (µs)×0.0342\text{Distance (cm)} = \frac{\text{Time (µs)} \times 
+
+0.034}{2}Distance (cm)=2Time (µs)×0.034
+
+In this project:
+
+• An LED blinks when the distance measured by the sensor falls below a threshold.
+
+Components:
+
+1. Ultrasonic Sensor (HC-SR04):
+
+o TRIG pin: Sends an ultrasonic pulse.
+
+o ECHO pin: Receives the reflected signal.
+
+2. LED: Controlled by a digital pin.
+
+3. Arduino: Processes the sensor data and controls the LED.
+
+CODE:
+
+#define TRIG 9
+
+#define ECHO 10
+
+#define LED 13
+
+void setup() {
+
+ pinMode(TRIG, OUTPUT);
+
+ pinMode(ECHO, INPUT);
+pinMode(LED, OUTPUT);
+
+}
+
+void loop() {
+
+ digitalWrite(TRIG, LOW); delayMicroseconds(2);
+
+ digitalWrite(TRIG, HIGH); delayMicroseconds(10); digitalWrite(TRIG, LOW);
+
+ long duration = pulseIn(ECHO, HIGH);
+
+ int distance = duration * 0.034 / 2;
+
+ digitalWrite(LED, distance < 10 ? HIGH : LOW); // Blink LED if distance < 10cm
+
+}
+
+Explanation
+
+1. Setup Phase:
+
+o The TRIG pin sends a 10µs pulse.
+
+o The ECHO pin measures the time of the returning pulse.
+
+o The LED is initialized as an output.
+
+2. Loop Phase:
+
+o Distance is calculated from the measured time.
+
+o If the distance is below 10 cm, the LED is turned ON; otherwise, it's OFF.
+
+Proteus Diagram
+
+Components for Simulation:
+
+1. Arduino UNO: Central microcontroller.
+
+2. HC-SR04 Ultrasonic Sensor:
+
+o TRIG pin → Arduino Pin 9.
+
+o ECHO pin → Arduino Pin 10.
+
+o VCC and GND → Power and ground.
+
+3. LED:
+
+o Anode → Arduino Pin 13 (through a resistor, e.g., 220Ω).
+
+o Cathode → GND.
+
+Steps to Create Diagram:
+
+1. Add an Arduino UNO component.
+
+2. Connect the HC-SR04 TRIG and ECHO pins to pins 9 and 10 of Arduino, respectively.
+
+3. Connect an LED to pin 13 of Arduino, with the cathode connected to GND via a resistor.
+
+4. Provide power to the circuit (5V to the sensor and Arduino)
